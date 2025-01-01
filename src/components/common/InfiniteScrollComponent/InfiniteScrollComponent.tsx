@@ -3,7 +3,6 @@ import "./InfiniteScrollComponent.css";
 
 
 export interface InfiniteScrollComponentProps {
-    currentItemsLength: number;
     isBottomEndOfResultsReached: boolean;
     wrapperClassName: string;
     getMoreItems: () => Promise<void>

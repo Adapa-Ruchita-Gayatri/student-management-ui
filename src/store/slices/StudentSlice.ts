@@ -2,7 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { StudentResponse } from './../../types';
 
 export interface GlobalState {
-  studentsData: StudentResponse[]
+  studentsData: StudentResponse[],
+  studentsDataLoading: boolean,
+  allStudentsLoaded: boolean
 }
 
 export const sampleStudentsData: StudentResponse[] = [
@@ -45,7 +47,8 @@ export const sampleStudentsData: StudentResponse[] = [
 
 
 const initialState: GlobalState = {
-    studentsData: sampleStudentsData
+    studentsData: sampleStudentsData,
+    studentsDataLoading: false
 };
 
 const globalSlice = createSlice({
@@ -55,8 +58,19 @@ const globalSlice = createSlice({
     setStudentsData: (state, action: PayloadAction<StudentResponse[]>) => {
       state.studentsData = action.payload;
     },
+    setStudentsDataLoading: (state, action: PayloadAction<boolean>) => {
+      state.studentsDataLoading = action.payload;
+    },
+    setAllStudentsLoaded: (state, action: PayloadAction<boolean>) => {
+      state.allStudentsLoaded = action.payload
+    },
+    resetStudentsState: (state) => {
+      state.studentsData = []
+      state.studentsDataLoading = false;
+      state.allStudentsLoaded = false;
+    }
   },
 });
 
-export const { setStudentsData } = globalSlice.actions;
+export const { setStudentsData, setStudentsDataLoading, setAllStudentsLoaded, resetStudentsState } = globalSlice.actions;
 export const globalReducer = globalSlice.reducer;

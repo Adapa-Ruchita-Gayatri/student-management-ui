@@ -8,3 +8,8 @@ export interface Student {
 export interface StudentResponse extends Student {
     id: string
 }
+
+export interface StudentsFetchRequestPayload {
+    limit: number;
+    offset: number;
+}
