@@ -35,6 +35,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
       navigate(`/search`);
     } else {
       await dispatch(CreateAction.createStudentAction(formData));
+      navigate(`/search`);
     }
   };
   

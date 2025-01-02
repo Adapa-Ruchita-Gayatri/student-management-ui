@@ -1,5 +1,5 @@
 import { ApiUrlEndPoints } from "../Endpoints/ApiUrlEndpoints";
-import { Student, StudentResponse } from "../types";
+import { ResponseWrapper, Student, StudentResponse, StudentsFetchRequestPayload } from "../types";
 import { apiRequest, replacePathVariables } from "../utils";
 
 export class StudentService {
@@ -24,4 +24,10 @@ export class StudentService {
       );
       return await apiRequest<StudentResponse>(url, "put", payload);
     }
+
+    static searchStudents = async(payload: StudentsFetchRequestPayload) => {
+      let urlEndPoint = ApiUrlEndPoints.SEARCH_STUDENT_ENDPOINT;
+      const resp = await apiRequest<ResponseWrapper<StudentResponse[]>>(urlEndPoint, 'GET', null, payload);
+      return resp.data
+  }
 }

@@ -12,15 +12,20 @@ export interface GridComponentProps {
 }
 
 export const GridComponent = (props: GridComponentProps) => {
-
+    const [gridLoad, setGridLoad] = React.useState(false);
     const studentsData = useSelector<AppState, StudentResponse[]>((state) => state.globalData.studentsData);
     const allStudentsLoaded = useSelector<AppState, boolean>((state) => state.globalData.allStudentsLoaded);
+    const studentsDataLoading =  useSelector<AppState, boolean>((state) => state.globalData.studentsDataLoading);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchStudentsData();
-
+        const fetchData = async() => {
+            setGridLoad(true)
+            await fetchStudentsData();
+            setGridLoad(false)
+        }
+        fetchData();
         return () => {
             dispatch(SearchActions.resetStudentsData());
         }
@@ -30,7 +35,7 @@ export const GridComponent = (props: GridComponentProps) => {
         await dispatch(SearchActions.getAndSetStudentsData({
             limit: 20,
             offset: studentsData.length
-        }))
+        }));
     }
 
     const handleEdit = (student: StudentResponse) => {
@@ -38,7 +43,7 @@ export const GridComponent = (props: GridComponentProps) => {
     };
 
     const getTableView = (studentsData: StudentResponse[]) => {
-        if (studentsData.length === 0) {
+        if (studentsData.length === 0 && studentsDataLoading) {
             return <p className="mt-4">No students found</p>;
         }
 
@@ -86,6 +91,8 @@ export const GridComponent = (props: GridComponentProps) => {
         );
     };
 
+    console.log("Rerendering UI")
+
     return (
         <div className="grid-view-wrapper">
             <h1 className="font-size-20">Student Data</h1>
@@ -96,7 +103,7 @@ export const GridComponent = (props: GridComponentProps) => {
                     await fetchStudentsData();
                 }}
                 getComponentToRender={() => {
-                    return getTableView(studentsData);
+                    return gridLoad ? <span className="loading-view">Loading...</span> : getTableView(studentsData);
                 }}
 
             />

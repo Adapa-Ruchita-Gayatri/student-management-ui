@@ -1,62 +1,33 @@
 import { StudentService } from "../services/StudentService";
 import { AppDispatch, setAllStudentsLoaded, setStudentsData, setStudentsDataLoading, resetStudentsState } from "../store";
-import { StudentsFetchRequestPayload } from "../types";
+import { StudentResponse, StudentsFetchRequestPayload } from "../types";
 
 export class SearchActions {
-
-
-    static formMessages = (from: number, to: number) => {
-        if(from>=40) {
-            return [];
-        }
-        if(to<=0) {
-            return [];
-        }
-        const messages = [];
-        for (let i = from; i <= to; i++) {
-            const item = {
-                id: i,
-                name: i + "John Doe",
-                age: "16",
-                phoneNumber: 1234567890,
-                studentClass: "10th Grade"
-              };
-
-            messages.push(item);
-            
-        }
-        return messages;
-
-    }
-
     static resetStudentsData = () => async (dispatch: AppDispatch) => {
         await dispatch(resetStudentsState());
     }
 
     static getAndSetStudentsData = (payload: StudentsFetchRequestPayload) => async (dispatch: AppDispatch, getState: any) => {
-
-        const students = this.formMessages(payload.offset, payload.offset + payload.limit);
+        const students: StudentResponse[] =  await StudentService.searchStudents(payload);
+        console.log("students", students);
+        
         
         setStudentsDataLoading(true);
 
         return new Promise((res, rej) => {
-            setTimeout(() => {
+            setTimeout(async () => {
                 const existingStudents = getState().globalData.studentsData;
-                const allStudents = [...existingStudents, students];
+                const allStudents = [...existingStudents, ...students];
                 if(students.length == 0) {
-                    setAllStudentsLoaded(true);
+                    dispatch(setAllStudentsLoaded(true));
                     res(true);
                     return;
                 }
-                setStudentsData(allStudents);
-                setStudentsDataLoading(false);
-                
+                dispatch(setStudentsData(allStudents));
+                dispatch(setStudentsDataLoading(false));
                 res(true);
-            },4000);
+            },500);
         })
-
-       
-
     }
 
     static deletStudent = (id: string) => async (dispatch: any, getState: any) => {
