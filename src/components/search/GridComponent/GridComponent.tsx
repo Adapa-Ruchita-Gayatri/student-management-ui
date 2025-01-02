@@ -7,6 +7,8 @@ import { SearchActions } from "../../../actions";
 import { InfiniteScrollComponent } from "../../common";
 import { useNavigate } from "react-router-dom";
 import { SearchComponent } from "../SearchComponent";
+import { toast } from "react-toastify";
+import { Toast } from "../../../constants";
 
 export interface GridComponentProps {
 
@@ -98,8 +100,14 @@ export const GridComponent = (props: GridComponentProps) => {
                                         <span
                                             className="dropdown-item"
                                             onClick={async () => {
-                                                await dispatch(SearchActions.deletStudent(student.id));
-                                                await fetchSearchBasedStudentsData();
+                                               const result = await dispatch(SearchActions.deletStudent(student.id));
+                                               if(result) {
+                                                    toast("Student deleted successfully!", Toast.SUCCESS_TOAST_CONFIG);
+                                                    await fetchSearchBasedStudentsData();
+                                               } else {
+                                                    toast("Failed to delete student!", Toast.ERR_TOAST_CONFIG);
+                                               }
+                                                
                                             }}
                                         >
                                             Delete

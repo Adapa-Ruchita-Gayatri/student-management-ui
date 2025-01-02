@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StudentResponse } from '../../../types';
+import { toast } from 'react-toastify';
+import { Toast } from '../../../constants';
 
 export interface CreateStudentFormProps {
 }
@@ -31,13 +33,29 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
 
   const handleSubmit = async () => {
     if (studentData?.id) {
-      await dispatch(CreateAction.updateStudentAction(formData, studentData.id));
-      navigate(`/search`);
+      const result = await dispatch(CreateAction.updateStudentAction(formData, studentData.id));
+      if(result) {
+        showToast("Student updated successfully!", Toast.SUCCESS_TOAST_CONFIG);
+        navigate(`/search`);
+      } else {
+        showToast("Failed to update student!", Toast.ERR_TOAST_CONFIG);
+      }
+      
     } else {
-      await dispatch(CreateAction.createStudentAction(formData));
-      navigate(`/search`);
+      const result = await dispatch(CreateAction.createStudentAction(formData));
+      if(result) {
+        showToast("Student created successfully!", Toast.SUCCESS_TOAST_CONFIG);
+        navigate(`/search`);
+      } else {
+        showToast("Failed to create student!", Toast.ERR_TOAST_CONFIG);
+      }
+      
     }
   };
+
+  const showToast = (msg: string, config:any) => {
+    toast(msg, config);
+  }
   
 
   return (

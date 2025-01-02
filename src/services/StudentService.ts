@@ -5,7 +5,7 @@ import { apiRequest, replacePathVariables } from "../utils";
 export class StudentService {
     static createStudent = async(payload: Student) => {
         let urlEndPoint = ApiUrlEndPoints.CREATE_STUDENT_ENDPOINT
-        return await apiRequest(urlEndPoint, 'POST', payload)
+        return (await apiRequest<ResponseWrapper<any>>(urlEndPoint, 'POST', payload)).success
     }
 
     static deleteStudent = async (id: string) => {
@@ -13,8 +13,8 @@ export class StudentService {
           ApiUrlEndPoints.DELETE_UPDATE_STUDENT_ENDPOINT,
           [id]
         );
-        const response = await apiRequest<boolean>(url, "delete");
-        return response;
+        const response = await apiRequest<ResponseWrapper<boolean>>(url, "DELETE");
+        return response.data;
       }
 
     static updateStudent = async (payload: Student, id: string) => {
@@ -22,12 +22,12 @@ export class StudentService {
         ApiUrlEndPoints.DELETE_UPDATE_STUDENT_ENDPOINT,
         [id]
       );
-      return await apiRequest<StudentResponse>(url, "put", payload);
+      return (await apiRequest<ResponseWrapper<boolean>>(url, "PUT", payload)).success;
     }
 
     static searchStudents = async(payload: StudentsFetchRequestPayload) => {
       let urlEndPoint = ApiUrlEndPoints.SEARCH_STUDENT_ENDPOINT;
-      const resp = await apiRequest<ResponseWrapper<StudentResponse[]>>(urlEndPoint, 'GET', null, payload);
+      const resp = (await apiRequest<ResponseWrapper<StudentResponse[]>>(urlEndPoint, "GET", null, payload));
       return resp.data
   }
 }

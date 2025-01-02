@@ -31,7 +31,7 @@ export class SearchActions {
     }
 
     static deletStudent = (id: string) => async (dispatch: any, getState: any) => {
-        await StudentService.deleteStudent(id)
+        return await StudentService.deleteStudent(id)
     }
 
     
