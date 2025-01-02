@@ -47,7 +47,7 @@ export const sampleStudentsData: StudentResponse[] = [
 
 
 const initialState: GlobalState = {
-    studentsData: sampleStudentsData,
+    studentsData: [],
     studentsDataLoading: false,
     allStudentsLoaded: false
 };
