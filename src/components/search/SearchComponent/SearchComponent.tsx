@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SearchComponent.css"
+import { debounce } from "../../../utils";
 
 export interface SearchProps {
     fetchSearchResults: (debouncedQuery: string) => void
@@ -7,28 +8,22 @@ export interface SearchProps {
 
 export const SearchComponent = (props: SearchProps) => {
   const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(query);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [query]);
-
-
-  useEffect(() => {
-    props.fetchSearchResults(debouncedQuery);
-  }, [debouncedQuery]);
+  const debouncedSearchResults = React.useMemo(
+    () => debounce(props.fetchSearchResults, 500),
+    [props.fetchSearchResults]
+  );
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Search by Name"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          debouncedSearchResults(e.target.value);
+        }}
         className="search-view-component"
       />
     </div>

@@ -42,7 +42,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
 
   return (
     <div className="container mt-5">
-      <span className="font-size-20">Fill this Student Form</span>
+      <b className="font-size-20">Fill this Student Form</b>
       <form >
         <div className='w-100 d-flex gap-20 mt-5'>
           <div className="w-50 d-flex align-items-start flex-column">
@@ -57,7 +57,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter your full name"
+              placeholder="Full Name"
               autoComplete="off"
               required
             />
@@ -75,7 +75,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
               name="age"
               value={formData.age}
               onChange={handleChange}
-              placeholder="Enter your age"
+              placeholder="Age"
               autoComplete="off"
               required
             />
@@ -94,7 +94,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
               name="studentClass"
               value={formData.studentClass}
               onChange={handleChange}
-              placeholder="Enter your class"
+              placeholder="Class"
               autoComplete="off"
               required
             />
@@ -112,7 +112,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
-              placeholder="Enter your phone number"
+              placeholder="Phone Number"
               autoComplete="off"
               min="1000000000"
               max="9999999999"

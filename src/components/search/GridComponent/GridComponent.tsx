@@ -70,7 +70,7 @@ export const GridComponent = (props: GridComponentProps) => {
                         <th>Age</th>
                         <th>Phone Number</th>
                         <th>Class</th>
-                        <th></th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,12 +115,12 @@ export const GridComponent = (props: GridComponentProps) => {
         );
     };
 
-    console.log("Rerendering UI")
+    
 
     return (
         <div className="grid-view-wrapper">
-            <div className="d-flex align-items-center justify-content-between w-100 mt-3">
-                <h1 className="font-size-20">Student Data</h1>
+            <div className="d-flex align-items-center justify-content-between w-100">
+                <b className="font-size-20">Student Data</b>
                 <SearchComponent fetchSearchResults={(searchString) => fetchSearchBasedStudentsData(searchString)} />
             </div>
             <InfiniteScrollComponent

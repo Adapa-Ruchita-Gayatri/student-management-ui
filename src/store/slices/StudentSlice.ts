@@ -57,7 +57,6 @@ const globalSlice = createSlice({
   initialState,
   reducers: {
     setStudentsData: (state, action: PayloadAction<StudentResponse[]>) => {
-      console.log("Setting state")
       state.studentsData = action.payload;
     },
     setStudentsDataLoading: (state, action: PayloadAction<boolean>) => {

@@ -13,23 +13,21 @@ export class SearchActions {
             offset: payload.offset,
             name: payload.name,
         }
+        if(payload.isReset) {
+            dispatch(setAllStudentsLoaded(true));
+        }
         const students: StudentResponse[] =  await StudentService.searchStudents(respPayload);
         setStudentsDataLoading(true);
 
-        return new Promise((res, rej) => {
-            setTimeout(async () => {
-                const existingStudents = payload.isReset ? [] : getState().globalData.studentsData;
-                const allStudents = [...existingStudents, ...students];
-                if(students.length == 0) {
-                    dispatch(setAllStudentsLoaded(true));
-                    res(true);
-                    return;
-                }
-                dispatch(setStudentsData(allStudents));
-                dispatch(setStudentsDataLoading(false));
-                res(true);
-            },500);
-        })
+        const existingStudents = payload.isReset ? [] : getState().globalData.studentsData;
+        const allStudents = [...existingStudents, ...students];
+        if(students.length == 0) {
+            dispatch(setAllStudentsLoaded(true));
+            dispatch(setStudentsData(existingStudents))
+            return;
+        }
+        dispatch(setStudentsData(allStudents));
+        dispatch(setStudentsDataLoading(false));
     }
 
     static deletStudent = (id: string) => async (dispatch: any, getState: any) => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import "./Header.css"
 
-export interface HeaderProps {}
+export interface HeaderProps { }
 
 export const Header: React.FC<HeaderProps> = () => {
   const tabsList = ['Create', 'Search'];
@@ -29,15 +29,19 @@ export const Header: React.FC<HeaderProps> = () => {
           to={productUrl}
           onClick={() => setActiveTab(tab)}
         >
-          {tab}
+          <b>{tab}</b>
         </Link>
       </li>
     );
   };
 
   return (
-    <ul className="nav nav-tabs d-flex align-items-center justify-content-start" role="tablist">
-      {tabsList.map((tab) => getTabView(tab))}
-    </ul>
+    <div className='header-wrapper'>
+      <h1><b>Student Management System</b></h1>
+      <ul className="nav nav-tabs d-flex align-items-center justify-content-start" role="tablist">
+        {tabsList.map((tab) => getTabView(tab))}
+      </ul>
+    </div>
+
   );
 };
