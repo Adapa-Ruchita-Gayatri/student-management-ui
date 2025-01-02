@@ -1,3 +1,4 @@
+import { StudentService } from "../services/StudentService";
 import { AppDispatch, setAllStudentsLoaded, setStudentsData, setStudentsDataLoading, resetStudentsState } from "../store";
 import { StudentsFetchRequestPayload } from "../types";
 
@@ -17,7 +18,7 @@ export class SearchActions {
                 id: i,
                 name: i + "John Doe",
                 age: "16",
-                phoneNumber: "123-456-7890",
+                phoneNumber: 1234567890,
                 studentClass: "10th Grade"
               };
 
@@ -56,6 +57,10 @@ export class SearchActions {
 
        
 
+    }
+
+    static deletStudent = (id: string) => async (dispatch: any, getState: any) => {
+        await StudentService.deleteStudent(id)
     }
 
     

@@ -35,3 +35,42 @@
     overflow-y: auto; /* Enable vertical scrolling */
     position: relative; /* Optional for proper scrolling context */
 }
+
+.kebab-menu {
+    transform: rotate(90deg);
+    font-size: 20px;
+    padding: 0;
+}
+
+.dropdown-toggle {
+    background: transparent;
+    color: #01010f;
+    transform: rotate(90deg);
+    padding: 2px;
+}
+
+.dropdown-toggle:hover {
+    border: 1px solid transparent;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu.show {
+    background: #f6f6f6;
+    border: 1px solid #f2f2f2;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px #98989ba6;
+    box-sizing: border-box;
+    left: auto;
+    right: 10px;
+    transform: translate3d(3px, 26px, 0);
+    will-change: auto;
+    z-index: 1;
+}
+
+.dropdown-item {
+    font-size: 14px;
+    cursor: pointer;
+}
