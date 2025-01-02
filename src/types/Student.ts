@@ -1,8 +1,8 @@
 export interface Student {
     name: string;
     age: string;
-    phoneNumber: string;
-    studentClass: string
+    studentClass: string;
+    phoneNumber: number;
 }
 
 export interface StudentResponse extends Student {

@@ -1,0 +1,38 @@
+.margin-left-4px {
+    margin-left: 4px;
+}
+
+.good-red {
+    color: #e91314;
+}
+
+li.tab-item.active-tab {
+    background: #7D00FF;
+}
+
+li.tab-item {
+    padding: 5px 10px;
+}
+
+.tab-link.active-tab, .tab-link.active-tab:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.tab-link, .tab-link:hover {
+    color: #01010f;
+    text-decoration: none;
+}
+
+.nav.nav-tabs.d-flex.align-items-center {
+    border-bottom: 3px solid #7D00FF;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.submit-button-wrapper, .submit-button-wrapper:hover {
+    background: #7D00FF;
+    border: none;
+}

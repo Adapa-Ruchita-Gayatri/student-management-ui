@@ -12,35 +12,35 @@ export const sampleStudentsData: StudentResponse[] = [
     id: "1",
     name: "John Doe",
     age: "16",
-    phoneNumber: "123-456-7890",
+    phoneNumber: 1234567890,
     studentClass: "10th Grade"
   },
   {
     id: "2",
     name: "Jane Smith",
     age: "15",
-    phoneNumber: "987-654-3210",
+    phoneNumber: 9876543210,
     studentClass: "9th Grade"
   },
   {
     id: "3",
     name: "Emily Johnson",
     age: "17",
-    phoneNumber: "456-789-0123",
+    phoneNumber: 4567892123,
     studentClass: "11th Grade"
   },
   {
     id: "4",
     name: "Michael Brown",
     age: "18",
-    phoneNumber: "321-654-9870",
+    phoneNumber: 3216549870,
     studentClass: "12th Grade"
   },
   {
     id: "5",
     name: "Sarah Davis",
     age: "16",
-    phoneNumber: "654-321-0987",
+    phoneNumber: 6543219789,
     studentClass: "10th Grade"
   }
 ];
@@ -48,7 +48,8 @@ export const sampleStudentsData: StudentResponse[] = [
 
 const initialState: GlobalState = {
     studentsData: sampleStudentsData,
-    studentsDataLoading: false
+    studentsDataLoading: false,
+    allStudentsLoaded: false
 };
 
 const globalSlice = createSlice({
