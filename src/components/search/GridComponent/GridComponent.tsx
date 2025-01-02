@@ -6,6 +6,7 @@ import { StudentResponse } from "../../../types";
 import { SearchActions } from "../../../actions";
 import { InfiniteScrollComponent } from "../../common";
 import { useNavigate } from "react-router-dom";
+import { SearchComponent } from "../SearchComponent";
 
 export interface GridComponentProps {
 
@@ -15,12 +16,13 @@ export const GridComponent = (props: GridComponentProps) => {
     const [gridLoad, setGridLoad] = React.useState(false);
     const studentsData = useSelector<AppState, StudentResponse[]>((state) => state.globalData.studentsData);
     const allStudentsLoaded = useSelector<AppState, boolean>((state) => state.globalData.allStudentsLoaded);
-    const studentsDataLoading =  useSelector<AppState, boolean>((state) => state.globalData.studentsDataLoading);
+    const studentsDataLoading = useSelector<AppState, boolean>((state) => state.globalData.studentsDataLoading);
+    const [searchString, setSearchString] = React.useState("");
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchData = async() => {
+        const fetchData = async () => {
             setGridLoad(true)
             await fetchStudentsData();
             setGridLoad(false)
@@ -34,7 +36,19 @@ export const GridComponent = (props: GridComponentProps) => {
     const fetchStudentsData = async () => {
         await dispatch(SearchActions.getAndSetStudentsData({
             limit: 20,
-            offset: studentsData.length
+            offset: studentsData.length,
+            name: searchString.trim(),
+            isReset: false
+        }));
+    }
+
+    const fetchSearchBasedStudentsData = async (searchString = "") => {
+        setSearchString(searchString.trim())
+        await dispatch(SearchActions.getAndSetStudentsData({
+            limit: 20,
+            offset: 0,
+            name: searchString,
+            isReset: true
         }));
     }
 
@@ -43,7 +57,7 @@ export const GridComponent = (props: GridComponentProps) => {
     };
 
     const getTableView = (studentsData: StudentResponse[]) => {
-        if (studentsData.length === 0 && studentsDataLoading) {
+        if (studentsData.length === 0) {
             return <p className="mt-4">No students found</p>;
         }
 
@@ -80,7 +94,17 @@ export const GridComponent = (props: GridComponentProps) => {
 
                                 <ul className="dropdown-menu" aria-labelledby="kebabMenuButton">
                                     <li><span className="dropdown-item" onClick={() => handleEdit(student)}>Edit</span></li>
-                                    <li><span className="dropdown-item" onClick={async() => await dispatch(SearchActions.deletStudent(student.id))}>Delete</span></li>
+                                    <li>
+                                        <span
+                                            className="dropdown-item"
+                                            onClick={async () => {
+                                                await dispatch(SearchActions.deletStudent(student.id));
+                                                await fetchSearchBasedStudentsData();
+                                            }}
+                                        >
+                                            Delete
+                                        </span>
+                                    </li>
                                 </ul>
                             </div></td>
 
@@ -95,7 +119,10 @@ export const GridComponent = (props: GridComponentProps) => {
 
     return (
         <div className="grid-view-wrapper">
-            <h1 className="font-size-20">Student Data</h1>
+            <div className="d-flex align-items-center justify-content-between w-100 mt-3">
+                <h1 className="font-size-20">Student Data</h1>
+                <SearchComponent fetchSearchResults={(searchString) => fetchSearchBasedStudentsData(searchString)} />
+            </div>
             <InfiniteScrollComponent
                 isBottomEndOfResultsReached={allStudentsLoaded}
                 wrapperClassName={"students-search-grid mt-5"}

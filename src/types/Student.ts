@@ -12,4 +12,6 @@ export interface StudentResponse extends Student {
 export interface StudentsFetchRequestPayload {
     limit: number;
     offset: number;
+    name: string;
+    isReset?: boolean
 }

@@ -8,15 +8,17 @@ export class SearchActions {
     }
 
     static getAndSetStudentsData = (payload: StudentsFetchRequestPayload) => async (dispatch: AppDispatch, getState: any) => {
-        const students: StudentResponse[] =  await StudentService.searchStudents(payload);
-        console.log("students", students);
-        
-        
+        let respPayload = {
+            limit: payload.limit,
+            offset: payload.offset,
+            name: payload.name,
+        }
+        const students: StudentResponse[] =  await StudentService.searchStudents(respPayload);
         setStudentsDataLoading(true);
 
         return new Promise((res, rej) => {
             setTimeout(async () => {
-                const existingStudents = getState().globalData.studentsData;
+                const existingStudents = payload.isReset ? [] : getState().globalData.studentsData;
                 const allStudents = [...existingStudents, ...students];
                 if(students.length == 0) {
                     dispatch(setAllStudentsLoaded(true));
