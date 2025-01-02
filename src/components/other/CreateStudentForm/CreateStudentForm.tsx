@@ -42,7 +42,7 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
   return (
     <div className="container mt-5">
       <span className="font-size-20">Fill this Student Form</span>
-      <form onSubmit={handleSubmit}>
+      <form >
         <div className='w-100 d-flex gap-20 mt-5'>
           <div className="w-50 d-flex align-items-start flex-column">
             <label htmlFor="name" className="form-label margin-left-4px">
@@ -120,7 +120,10 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary submit-button-wrapper mt-5">
+        <button className="btn btn-primary submit-button-wrapper mt-5" onClick={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}>
          {studentData?.id ? "Update" : "Create"}
         </button>
       </form>

@@ -5,7 +5,7 @@ import { apiRequest, replacePathVariables } from "../utils";
 export class StudentService {
     static createStudent = async(payload: Student) => {
         let urlEndPoint = ApiUrlEndPoints.CREATE_STUDENT_ENDPOINT
-        return await apiRequest(urlEndPoint, 'post', payload)
+        return await apiRequest(urlEndPoint, 'POST', payload)
     }
 
     static deleteStudent = async (id: string) => {

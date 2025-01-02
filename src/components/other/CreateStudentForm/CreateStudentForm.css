@@ -26,6 +26,7 @@ li.tab-item {
 
 .nav.nav-tabs.d-flex.align-items-center {
     border-bottom: 3px solid #7D00FF;
+    padding-left: 20px;
 }
 
 .font-size-20 {
