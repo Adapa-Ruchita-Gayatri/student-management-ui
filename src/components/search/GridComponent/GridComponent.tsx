@@ -67,7 +67,7 @@ export const GridComponent = (props: GridComponentProps) => {
             <h1>Student Data</h1>
             <InfiniteScrollComponent
                 isBottomEndOfResultsReached={allStudentsLoaded}
-                wrapperClassName={""}
+                wrapperClassName={"students-search-grid"}
                 getMoreItems={async () => {
                     await fetchStudentsData();
                 }}

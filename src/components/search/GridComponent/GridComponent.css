@@ -28,3 +28,10 @@
 .students-table tr:hover {
     background-color: #f1f1f1;
 }
+
+
+.students-table-body-wrapper {
+    max-height: 300px; /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    position: relative; /* Optional for proper scrolling context */
+}
