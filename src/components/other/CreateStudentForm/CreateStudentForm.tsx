@@ -32,22 +32,32 @@ export const CreateStudentForm: React.FC<CreateStudentFormProps> = (props) => {
   };
 
   const handleSubmit = async () => {
+    const { name, age, studentClass, phoneNumber } = formData;
+    const isAllDataPresent = !name || !age || !studentClass || !phoneNumber;
     if (studentData?.id) {
-      const result = await dispatch(CreateAction.updateStudentAction(formData, studentData.id));
+      const result = !isAllDataPresent && await dispatch(CreateAction.updateStudentAction(formData, studentData.id));
       if(result) {
         showToast("Student updated successfully!", Toast.SUCCESS_TOAST_CONFIG);
         navigate(`/search`);
       } else {
-        showToast("Failed to update student!", Toast.ERR_TOAST_CONFIG);
+        if(isAllDataPresent) {
+          showToast("Failed to update student, add all mandatory fields!", Toast.ERR_TOAST_CONFIG);
+        } else {
+          showToast("Failed to update student!", Toast.ERR_TOAST_CONFIG);
+        }
       }
       
     } else {
-      const result = await dispatch(CreateAction.createStudentAction(formData));
+      const result = !isAllDataPresent && await dispatch(CreateAction.createStudentAction(formData));
       if(result) {
         showToast("Student created successfully!", Toast.SUCCESS_TOAST_CONFIG);
         navigate(`/search`);
       } else {
-        showToast("Failed to create student!", Toast.ERR_TOAST_CONFIG);
+        if(isAllDataPresent) {
+          showToast("Failed to create student, add all mandatory fields!", Toast.ERR_TOAST_CONFIG);
+        } else {
+          showToast("Failed to create student!", Toast.ERR_TOAST_CONFIG);
+        }
       }
       
     }
