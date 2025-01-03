@@ -1,10 +1,15 @@
 .search-view-component {
     background: transparent;
-    border: 1px solid #01010f;
+    padding: 5px 10px;
+    border: 2px solid #7D00FF;
     border-radius: 5px;
     color: #01010f;
 }
 
 .search-view-component:hover {
-    border: 1px solid #01010f;
+    border: 2px solid #7D00FF;
+}
+
+.search-view-component:focus-visible {
+    outline: none;
 }
